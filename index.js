@@ -3,6 +3,7 @@ const routes = require("./routes");
 const exphbs = require("express-handlebars");
 const path = require("path");//sirve para obtener la url actual o de ciertos documentos
 
+require("dotenv").config({ path: "variables.env" });
 
 const app = express();
 
@@ -19,4 +20,4 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", routes())
 
-app.listen(3000);
+app.listen(process.env.PUERTO);
