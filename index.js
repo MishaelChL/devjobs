@@ -11,10 +11,16 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 //
 const MongoStore = require("connect-mongo")(session);
+const bodyParser = require("body-parser");
+
 
 require("dotenv").config({ path: "variables.env" });
 
 const app = express();
+
+//habilitar body parser
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 //habilitar handelbars como view
 app.engine("handlebars", 
