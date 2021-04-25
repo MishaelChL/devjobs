@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./index"
+    "dev": "nodemon ./index",
+    "start": "concurrently \"npm run dev\" \"npm run watch\"",
+    "watch": "webpack -w --mode development"
   },
   "author": "MishaelChL",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^6.0.2",
     "connect-mongo": "^2.0.3",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
@@ -21,6 +24,11 @@
     "slug": "^4.0.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
+    "babel-loader": "^8.2.2",
+    "nodemon": "^2.0.7",
+    "webpack": "^5.35.1",
+    "webpack-cli": "^4.6.0"
   }
 }
