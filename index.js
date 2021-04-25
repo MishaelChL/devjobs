@@ -3,7 +3,9 @@ require("./config/db");
 
 const express = require("express");
 const routes = require("./routes");
+const handlebars = require("handlebars");
 const exphbs = require("express-handlebars");
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 //sirve para obtener la url actual o de ciertos documentos
 const path = require("path");
 //para almacenar los usuarios autenticados
@@ -26,7 +28,8 @@ app.use(express.urlencoded({extended: true}));
 app.engine("handlebars", 
     exphbs({
         defaultLayout: "layout",
-         helpers: require("./helpers/handlebars")
+        helpers: require("./helpers/handlebars"),
+        handlebars: allowInsecurePrototypeAccess(handlebars),
     })
 );
 app.set("view engine", "handlebars");
