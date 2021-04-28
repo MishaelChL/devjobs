@@ -16,6 +16,7 @@ const MongoStore = require("connect-mongo")(session);
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const flash = require("connect-flash");
+const passport = require("./config/passport");
 
 require("dotenv").config({ path: "variables.env" });
 
@@ -50,6 +51,10 @@ app.use(session({
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
+
+//inicializar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //alertas y flash messages
 app.use(flash());
