@@ -1,7 +1,7 @@
 const moongose = require("mongoose");
 const Usuarios = moongose.model("Usuarios")
 
-exports.formCrearCuenta = async(req, res) => {
+exports.formCrearCuenta = (req, res) => {
     res.render("crear-cuenta", {
         nombrePagina: "Crea tu cuenta en devJobs",
         tagline: "Comienza a publicar tus vacantes gratis, solo debes de crear tu cuenta"
@@ -54,6 +54,11 @@ exports.crearUsuario = async(req, res, next) => {
         res.redirect("/crear-cuenta");
     }
     
-    
+}
 
+//formulario para iniciar sesion
+exports.formIniciarSesion = (req, res) => {
+    res.render("iniciar-sesion", {
+        nombrePagina: "Iniciar Sesion devJobs"
+    })
 }
