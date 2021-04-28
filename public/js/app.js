@@ -1,6 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     const skills = document.querySelector(".lista-conocimientos");//ojo .lista-conocimiento viene de la vista nueva-vacante, la class de ul
 
+    //Limpiar las alertas
+    let alertas = document.querySelector(".alertas");
+
+    if(alertas){
+        limpiarAlertas();
+    }
+
     if(skills){
         skills.addEventListener("click", agregarSkills);
 
@@ -41,4 +48,17 @@ const skillsSeleccionados = () => {
     //inyectar en el hidden
     const skillsArray = [...skills];
     document.querySelector("#skills").value = skillsArray;
+}
+
+const limpiarAlertas = () => {
+    const alertas = document.querySelector(".alertas");
+    const interval = setInterval(() => {
+        // console.log("2 segundos...");
+        if(alertas.children.length > 0){
+            alertas.removeChild(alertas.children[0]);
+        }else if(alertas.children.length === 0) {
+            alertas.parentElement.removeChild(alertas);
+            clearInterval(interval);
+        }
+    }, 2000);
 }
