@@ -7,6 +7,17 @@ exports.autenticarUsuario = passport.authenticate("local", {
     badRequestMessage: "Ambos campos son obligatorios"
 })
 
+//revisar si el usuario está autenticado o no
+exports.verificarUsuario = (req, res, next) => {
+    //revisar el usuario
+    if(req.isAuthenticated()/*metodo de passport que devuelve true o false*/){
+        return next(); //estan autenticados
+    }
+
+    //redireccionar
+    res.redirect("/iniciar-sesion");
+}
+
 exports.mostrarPanel = (req, res) => {
     res.render("administracion",{
         nombrePagina: "Pagina de Administracion",
