@@ -41,6 +41,12 @@ module.exports = () => {
     //autenticar usuarios
     router.get("/iniciar-sesion", usuariosController.formIniciarSesion);
     router.post("/iniciar-sesion", authController.autenticarUsuario);
+    //cerrar sesion
+    router.get("/cerrar-sesion", 
+        authController.verificarUsuario,
+        authController.cerrarSesion
+    );
+
 
     //panel de administracion
     router.get("/administracion", 
@@ -57,7 +63,6 @@ module.exports = () => {
         authController.verificarUsuario,
         usuariosController.editarPerfil
     );
-
 
     return router;
 }
