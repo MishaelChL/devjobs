@@ -62,3 +62,12 @@ exports.formIniciarSesion = (req, res) => {
         nombrePagina: "Iniciar Sesion devJobs"
     })
 }
+
+exports.formEditarPerfil = (req, res) => {
+
+
+    res.render("editar-perfil" , {
+        nombrePagina: "Edita tu Perfil en devJobs",
+        usuario: req.user
+    })
+}
