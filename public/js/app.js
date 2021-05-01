@@ -1,3 +1,6 @@
+import axios from "axios";
+import Swal from "sweetalert2";
+
 document.addEventListener("DOMContentLoaded", () => {
     const skills = document.querySelector(".lista-conocimientos");//ojo .lista-conocimiento viene de la vista nueva-vacante, la class de ul
 
@@ -13,6 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //una vez que estamos en editar, llamar la funcion
         skillsSeleccionados();
+    }
+
+    const vacantesListado = document.querySelector(".panel-administracion");
+    
+    if(vacantesListado){
+        vacantesListado.addEventListener("click", accionesListado);
     }
 })
 
@@ -61,4 +70,16 @@ const limpiarAlertas = () => {
             clearInterval(interval);
         }
     }, 2000);
+}
+
+//eliminar vacantes
+const accionesListado = (e) => {
+    e.preventDefault(); //no hace funcionar las acciones de los botones
+    // console.log(e.target);
+
+    if(e.target.dataset.eliminar){
+        //eliminar por axios
+    }else{
+        window.location.href = e.target.href;
+    }
 }

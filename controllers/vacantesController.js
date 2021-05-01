@@ -110,3 +110,8 @@ exports.validarVacante = (req, res, next) => {
 
     next();
 }
+
+exports.eliminarVacante = async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+}
