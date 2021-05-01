@@ -76,3 +76,37 @@ exports.editarVacante = async(req, res) => {
 
 
 }
+
+//validar y sanitizar los campos de las nuevas vacantes
+exports.validarVacante = (req, res, next) => {
+    
+    //sanitizar los campos
+    req.sanitizeBody("titulo").escape();
+    req.sanitizeBody("empresa").escape();
+    req.sanitizeBody("ubicacion").escape();
+    req.sanitizeBody("salario").escape();
+    req.sanitizeBody("contrato").escape();
+    req.sanitizeBody("skills").escape();
+
+    //validar
+    req.checkBody("titulo", "Agrega un titulo a la vacante").notEmpty();
+    req.checkBody("empresa", "Agrega una empresa").notEmpty();
+    req.checkBody("ubicacion", "Agrega una ubicacion").notEmpty();
+    req.checkBody("contrato", "Selecciona el tipo de contrato").notEmpty();
+    req.checkBody("skills", "Agrega al menos una habilidad").notEmpty();
+
+    const errores = req.validationErrors();
+    if(errores){
+        //recargar las vistas con los errores
+        req.flash("error", errores.map(error => error.msg));
+        res.render("nueva-vacante", {
+            nombrePagina: "Nueva Vacante",
+            tagline: "Llena el formulario y publica tu vacante",
+            cerrarSession: true,
+            nombre: req.user.nombre,
+            mensajes: req.flash()
+        })
+    }
+
+    next();
+}
