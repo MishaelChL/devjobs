@@ -79,6 +79,42 @@ const accionesListado = (e) => {
 
     if(e.target.dataset.eliminar){
         //eliminar por axios
+        Swal.fire({
+            title: 'Confirmar Eliminacion?',
+            text: "Una vez eliminado, no se puede recuperar",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar',
+            cancelButtonText: "No, Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                //enviar la peticion con axios
+                const url = `${location.origin}/vacantes/eliminar/${e.target.dataset.eliminar}`;
+                // console.log(url);
+
+                //axios para eliminar el registro
+                axios.delete(url, { params: {url} })
+                    .then(function(respuesta){
+                        // console.log(respuesta);
+                        if(respuesta.status===200){
+                            Swal.fire(
+                                'Eliminado',
+                                respuesta.data,
+                                'success'
+                            );
+
+                            //TO DO: Eliminar del DOM
+                            // console.log(e.target.parentElement.parentElement);
+                            e.target.parentElement.parentElement.parentElement.removeChild(e.target.parentElement.parentElement);
+                        }
+                    });
+
+              
+            }
+        })
     }else{
         window.location.href = e.target.href;
     }
