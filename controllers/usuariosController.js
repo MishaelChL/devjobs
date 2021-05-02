@@ -23,7 +23,16 @@ const configuracionMulter = {
             const extension = file.mimetype.split("/")[1];
             cb(null, `${shortid.generate()}.${extension}`);
         }
-    })
+    }),
+    fileFilter(req, file, cb){
+        if(file.mimetype === "image/jpeg" || file.mimetype === "image/png"){
+            //el callback se ejecuta como true o false, true cuando la imagen se acepta
+            cb(null, true);
+        }else{
+            cb(null, false);
+        }
+    },
+    limits: {fileSize: 100000}
 }
 
 const upload = multer(configuracionMulter).single("imagen");
@@ -34,8 +43,6 @@ exports.formCrearCuenta = (req, res) => {
         tagline: "Comienza a publicar tus vacantes gratis, solo debes de crear tu cuenta"
     })
 }
-
-
 
 exports.validarRegistro = (req, res, next) => {
 
@@ -111,6 +118,12 @@ exports.editarPerfil = async (req, res) => {
     if(req.body.password){
         usuario.password = req.body.password
     }
+
+    // console.log(req.file);
+    if(req.file){
+        usuario.imagen = req.file.filename;
+    }
+
     await usuario.save();
 
     req.flash("correcto", "Cambios guardados correctamente");
