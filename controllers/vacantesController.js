@@ -146,7 +146,7 @@ exports.subirCV = async (req, res, next) => {
         if(error){
             if(error instanceof multer.MulterError){
                 if(error.code === "LIMIT_FILE_SIZE"){
-                    req.flash("error", "El archivo es muy grande, max: 100kb");
+                    req.flash("error", "El archivo es muy grande, max: 110kb");
                 }else{
                     req.flash("error", error.message);
                 }
@@ -164,7 +164,7 @@ exports.subirCV = async (req, res, next) => {
 
 //opciones de Multer
 const configuracionMulter = {
-    limits: {fileSize: 100000},
+    limits: {fileSize: 110000},
     storage: fileStorage = multer.diskStorage({
         destination: (req, file, cb) => {
             cb(null, __dirname+"../../public/uploads/cv");
@@ -186,3 +186,27 @@ const configuracionMulter = {
 }
 
 const upload = multer(configuracionMulter).single("cv");
+
+//almacenar los candidatos en la base de datos
+exports.contactar = async (req, res, next) => {
+    // console.log(req.params.url);
+    const vacante = await Vacante.findOne({url: req.params.url});
+
+    //si no existe la vacante
+    if(!vacante) return next();
+
+    //todo bien, construir el nuevo objeto
+    const nuevoCandidato = {
+        nombre: req.body.nombre,
+        email: req.body.email,
+        cv: req.file.filename
+    }
+    
+    //almcenar la vacante
+    vacante.candidatos.push(nuevoCandidato);
+    await vacante.save();
+
+    //mensaje flash y redireccion
+    req.flash("correcto", "Se envió tu curriculum correctamente");
+    res.redirect("/");
+}
