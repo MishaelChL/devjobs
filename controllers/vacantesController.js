@@ -34,7 +34,7 @@ exports.agregarVacante = async(req, res) => {
 
 //muestra una vacante
 exports.mostrarVacante = async(req, res, next) => {
-    const vacante = await Vacante.findOne({ url: req.params.url });
+    const vacante = await Vacante.findOne({ url: req.params.url }).populate("autor");//populate es join en mongoose
 
     if(!vacante) return next();
 
