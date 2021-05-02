@@ -42,7 +42,28 @@
 
 <div class="contenedor datos-reclutador">
     <div class="enviar-datos">
+        <h2>Contactar Reclutador</h2>
+        <p>Llenar el siguiente formulario, sube tu curribulum y pronto te contactaremos</p>
+        <form action="/vacantes/{{vacante.url}}" method="POST" enctype="multipart/form-data" class="default-form">
+            <div class="campo">
+                <label>Nombre</label>
+                <input type="text" name="nombre" placeholder="Tu Nombre">
+            </div>
 
+            <div class="campo">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Tu Email">
+            </div>
+
+            <div class="campo">
+                <label>CV (PDF)</label>
+                <input type="file" name="cv">
+            </div>
+
+            <div class="campo">
+                <input type="submit" class="btn btn-verde" value="Enviar">
+            </div>
+        </form>
     </div>
     <div class="info-reclutador">
         <h2>Informacion Reclutador</h2>
