@@ -210,3 +210,23 @@ exports.contactar = async (req, res, next) => {
     req.flash("correcto", "Se envió tu curriculum correctamente");
     res.redirect("/");
 }
+
+exports.mostrarCandidatos = async (req, res, next) => {
+    // console.log(req.params.id);
+
+    const vacante = await Vacante.findById(ireq.params.id);
+
+    if(vacante.autor != req.user._id.toString()){
+        return next();
+    }
+
+    if(!vacante) return next();
+
+    res.render("candidatos", {
+        nombrePagina: `Candidatos Vacante - ${vacante.titulo}`,
+        cerrarSession: true,
+        nombre: req.user.nombre,
+        imagen: req.user.imagen,
+        candidatos: vacante.candidatos
+    })
+}
