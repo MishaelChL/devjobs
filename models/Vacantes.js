@@ -55,5 +55,7 @@ vacantesSchema.pre("save", function(next) {
     return;
 })
 
+//crear un indice para las busquedas
+vacantesSchema.index({ titulo: "text" });
 
 module.exports = mongoose.model("Vacante", vacantesSchema);
