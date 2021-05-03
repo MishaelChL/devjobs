@@ -89,7 +89,7 @@ exports.reestablecerPassword = async (req, res) => {
         }
     });
 
-    console.log(usuario);
+    // console.log(usuario);
 
     if(!usuario) {
         req.flash("error", "El formulario ya no es valido, intenta de nuevo");
@@ -100,4 +100,28 @@ exports.reestablecerPassword = async (req, res) => {
     res.render("nuevo-password", {
         nombrePagina: "Nuevo Password"
     });
+}
+
+//almacena el nuevo password en la db
+exports.guardarPassword = async (req, res) => {
+    const usuario = await Usuarios.findOne({
+        token: req.params.token,
+        expira: {
+            $gt: Date.now()
+        }
+    });
+    
+    if(!usuario) {
+        req.flash("error", "El formulario ya no es valido, intenta de nuevo");
+        return res.redirect("/reestablecer-password");
+    }
+
+    //guardar en la db
+    usuario.password = req.body.password;
+    usuario.token = undefined;
+    usuario.expira = undefined;
+
+    await usuario.save();
+    req.flash("correcto", "Password modificado correctamente");
+    res.redirect("/iniciar-sesion")
 }

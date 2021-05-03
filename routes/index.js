@@ -66,6 +66,9 @@ module.exports = () => {
     router.get("/reestablecer-password/:token",
         authController.reestablecerPassword
     );
+    router.post("/reestablecer-password/:token",
+        authController.guardarPassword
+    );
 
     //panel de administracion
     router.get("/administracion", 
